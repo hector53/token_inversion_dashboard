@@ -1,14 +1,6 @@
 <template>
   <div>
-    <q-card>
-      <q-card-section class="text-h6">
-        Line Chart
-      </q-card-section>
-      <q-card-section>
-        <div ref="linechart" id="lineChart" style="height: 300px;"></div>
-      </q-card-section>
-      <q-resize-observer @resize="onResize"/>
-    </q-card>
+    <div ref="linechart" id="lineChart" style="height: 300px;"></div>
   </div>
 </template>
 
@@ -21,19 +13,12 @@ export default {
       options: {
         color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
         tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            type: 'cross',
-            label: {
-              backgroundColor: '#6a7985'
-            }
-          }
+            show: true,
+         
         },
-        legend: {
-          data: ['Line 1'],
-          bottom: 10,
-        },
+       "title": {"show": true, "textStyle": {"color": "rgba(0, 0, 0 , .87)", "fontFamily": "sans-serif"}},
         grid: {
+            containLabel: true,
           left: '3%',
           right: '4%',
           bottom: '20%',
@@ -59,11 +44,11 @@ export default {
             stack: 'Total',
             smooth: true,
             lineStyle: {
-              width: 0
+              width: 2
             },
-            showSymbol: false,
+            
             areaStyle: {
-              opacity: 0.8,
+              opacity: 0.2,
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                 offset: 0,
                 color: 'rgba(128, 255, 165)'

@@ -1,8 +1,10 @@
 import { boot } from 'quasar/wrappers'
 import axios from 'axios'
 
-const api = axios.create({ baseURL: 'https://api.example.com' })
-
+//api real
+const api = axios.create({ baseURL: 'http://inversion.jemyxs2xli-zqy3jz1yy6kg.p.runcloud.link/wp-json/' })
+//api local
+//const api = axios.create({ baseURL: 'http://localhost/pruebaswordpress/wp-json/' })
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 

@@ -3,7 +3,12 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      {path: '', component: () => import('pages/Dashboard.vue')},
+      {path: '', component: () => import('pages/Dashboard.vue'), 
+      meta: {
+        requiresAuth: true
+      }
+      },
+      {path: '/Swap', component: () => import('pages/Swap.vue')},
       {path: '/Dashboard2', component: () => import('pages/Dashboard2.vue')},
       {path: '/Profile', component: () => import('pages/UserProfile.vue')},
       {path: '/Map', component: () => import('pages/Map.vue')},
@@ -48,6 +53,14 @@ const routes = [
   {
     path: '/Login-1',
     component: () => import('pages/Login-1.vue')
+  },
+  {
+    path: '/login',
+    component: () => import('pages/login.vue')
+  },
+  {
+    path: '/signup',
+    component: () => import('pages/signup.vue')
   },
   {
     path: '/Lock',
