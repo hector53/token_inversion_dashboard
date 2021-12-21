@@ -14,17 +14,18 @@ export default defineComponent({
     return {
       model: ref(false),
       options: {
+        color: ['#4c38f2', '#4c38f273'],
         legend: {
           bottom: 10,
         },
         tooltip: {},
         dataset: {
           source: [
-            ['product', '2015', '2016', '2017'],
-            ['Matcha Latte', 43.3, 85.8, 93.7],
-            ['Milk Tea', 83.1, 73.4, 55.1],
-            ['Cheese Cocoa', 86.4, 65.2, 82.5],
-            ['Walnut Brownie', 72.4, 53.9, 39.1]
+            ['product', 'Received', 'Invested'],
+            ['Agosto', 1000, 800],
+            ['Septiembre', 2000, 1200,],
+            ['Octubre', 5000, 6000],
+            ['Noviembre', 4000, 2500]
           ]
         },
         grid: {
@@ -41,7 +42,6 @@ export default defineComponent({
         series: [
           {type: 'bar'},
           {type: 'bar'},
-          {type: 'bar'}
         ]
       },
       bar_chart: ref(null),

@@ -11,12 +11,12 @@ export default {
     return {
       model: false,
       options: {
-        color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+        color: ['#4c38f2'],
         tooltip: {
             show: true,
          
         },
-       "title": {"show": true, "textStyle": {"color": "rgba(0, 0, 0 , .87)", "fontFamily": "sans-serif"}},
+       "title": {"show": true, "textStyle": {"color": "#4c38f2", "fontFamily": "sans-serif"}},
         grid: {
             containLabel: true,
           left: '3%',
@@ -51,10 +51,10 @@ export default {
               opacity: 0.2,
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                 offset: 0,
-                color: 'rgba(128, 255, 165)'
+                color: 'rgba(76 56 242)'
               }, {
                 offset: 1,
-                color: 'rgba(1, 191, 236)'
+                color: 'rgba(76 56 242 / 60%)'
               }])
             },
             emphasis: {

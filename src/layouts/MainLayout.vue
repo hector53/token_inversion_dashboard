@@ -10,8 +10,14 @@
           icon="menu"
           aria-label="Menu"
         />
-        <q-toolbar-title style="    font-size: 30px;    font-weight: bold;    color: black;">
-          FintUSD
+        <q-toolbar-title style="    flex:2">
+          <q-img
+          src="https://uploads-ssl.webflow.com/616c304ef1493f7d6005ee62/616d9d362627deb1ff49b1a9_logo-fintelligentia_Mesa%20de%20trabajo%201-p-500.png"
+          loading="lazy"
+          spinner-color="white"
+          class="brandF"
+          style="max-width: 190px"
+          />
         </q-toolbar-title>
         <q-space/>
         <div class="q-gutter-sm row items-center no-wrap">
@@ -56,7 +62,7 @@
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
-      width="200"
+      width="250"
     >
       <q-list>
         
@@ -88,7 +94,7 @@
         </q-item>
 
 
-         <q-item to="/" class="q-item-no-link-highlighting qitemSidebar">
+         <q-item to="/Activity" class="qitemSidebar" :class="{'active': $route.path == '/Activity'}">
           <q-item-section avatar>
             <q-icon name="local_activity"/>
           </q-item-section>
@@ -97,23 +103,7 @@
           </q-item-section>
         </q-item>
 
-         <q-item to="/" class="q-item-no-link-highlighting qitemSidebar">
-          <q-item-section avatar>
-            <q-icon name="emoji_events"/>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>Rewards</q-item-label>
-          </q-item-section>
-        </q-item>
 
-         <q-item to="/" class="q-item-no-link-highlighting qitemSidebar">
-          <q-item-section avatar>
-            <q-icon name="newspaper"/>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label>News</q-item-label>
-          </q-item-section>
-        </q-item>
         
       </q-list>
         

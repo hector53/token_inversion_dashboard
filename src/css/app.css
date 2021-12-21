@@ -1,6 +1,7 @@
 /* app global css */
 body {
-    font-family: 'Open Sans', sans-serif!important;
+    font-family: 'Space Grotesk',sans-serif!important;
+    color: #40406a!important;
 }
 .q-layout__shadow:after {
     box-shadow: none!important;
@@ -12,13 +13,16 @@ body {
 }
 .qitemSidebar.active {
     font-weight: bold;
+    color:#4c38f2
+    
 }
 .q-header{
     padding: 20px;
 }
 .text-h6{
+    color: #0d0c54!important;
     font-size: 30px;
-    color: black!important;
+    font-weight: 700;
 }
 .q-btn--rectangle {
     border-radius: 10px;
@@ -35,7 +39,6 @@ body {
     height: 265px;
     position: relative;
     margin: auto;
-    margin-top: 30px;
 }
 .stacked-cards_card__o4kFR {
     background: #ffffff;
@@ -74,7 +77,7 @@ body {
 .stacked-cards_content__1tVtX p .stacked-cards_number__3WZIa {
     margin: 0;
     padding: 0 12px;
-    color: #000000;
+    color: #0d0c54!important;
     display: flex;
     justify-content: center;
 }
@@ -325,10 +328,10 @@ body {
     user-select: none;
 }
 .kVnVaZ path:first-child {
-    stroke: white;
+    stroke: rgb(0, 0, 0);
 }
 .kVnVaZ path:last-child {
-    fill: white;
+    fill: rgb(0, 0, 0);
 }
 .eGowmH {
     line-height: 24px;
@@ -392,4 +395,30 @@ input[type=number] {
     max-width: 560px;
     padding: 10px;
     border-radius: 20px;
+}
+.brandF{
+    text-align: center;
+}
+.brandF:hover{
+    -webkit-transform: scale3d(.97,.97,1.01);
+    transform: scale3d(.97,.97,1.01);
+}
+.q-item__section--side > .q-icon {
+    font-size: 30px;
+    color: white;
+    align-items: center;
+    border-radius: 18px;
+    background-color: #4c38f2;
+    -webkit-transition: background-color 250ms;
+    transition: background-color 260ms;
+    width: 50px;
+    height: 50px
+}
+.qitemSidebar {
+    
+    margin: 20px;
+    border-radius: 10px;
+}
+.bg-black {
+    background: #4c38f2!important;
 }

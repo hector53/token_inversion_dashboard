@@ -1,7 +1,8 @@
 <template>
 <q-dialog ref="dialogRef" @hide="onDialogHide" :ok="false">
     <q-card class="q-dialog-plugin">
-       <div class="dodo__sc-9junse-6 lhqCVE" style="margin-top: 0">
+    
+    <div class="dodo__sc-9junse-6 lhqCVE">
       <div class="dodo__sc-13wxst1-0 kPSQsX">
         <div class="dodo__sc-13wxst1-1 jNNqtt" style="min-height: 483px">
           <div class="dodo__sc-9junse-7 jwOBbM">
@@ -26,9 +27,9 @@
                     class="sc-csTbgd kglWtV"
                     style="width: 24px; height: 24px; margin-right: 8px"
                   >
-                   <img src="https://cmp.dodoex.io/bH4DEFt9zh3egnuU3eEePDxtYaTX1BWRdijMbfobcc0/rs:fit:24:24:0/g:no/aHR0cHM6Ly9jZG4tbWVkaWEuZG9kb2V4LmlvL1VTRFRfZThiNzFiNWYyOS9VU0RUX2U4YjcxYjVmMjkucG5n.webp" class="sc-eGJWMs gQYBcx">
+                   <img :src="imgSend" class="sc-eGJWMs gQYBcx">
                   </div>
-                  <div class="dodo__onyo6i-1 iwByGz">USDT</div>
+                  <div class="dodo__onyo6i-1 iwByGz">{{labelSend}}</div>
                 </div>
                 <span class="dodo__sc-12irif8-1 fbjKLz"
                   ><svg
@@ -63,7 +64,7 @@
                 type="number"
                 inputmode="decimal"
                 class="dodo__qu0amn-3 dodo__sc-74lcca-3 iWLZXK fqGJMi"
-                value=""
+                v-model="moneySend"
               />
             </div>
             <div class="dodo__sc-9junse-12 diIJcg">
@@ -73,6 +74,7 @@
                 height="26"
                 viewBox="0 0 26 26"
                 class="dodo__a983zd-0 kVnVaZ"
+                @click="intercambiar"
               >
                 <g id="icon-token转换" transform="translate(0.5 0.5)">
                   <path
@@ -102,11 +104,11 @@
                     style="width: 24px; height: 24px; margin-right: 8px"
                   >
                     <img
-                      src="https://cmp.dodoex.io/qr1exo9PpFYUeb71DOXJp9E16VdZpj-V9qpRo-fujok/rs:fit:24:24:0/g:no/aHR0cHM6Ly9jZG4tbWVkaWEuZG9kb2V4LmlvL3VzZGNfZWU1MmExZWQyYi91c2RjX2VlNTJhMWVkMmIucG5n.webp"
+                      :src="imgReceived"
                       class="sc-eGJWMs gQYBcx"
                     />
                   </div>
-                  <div class="dodo__onyo6i-1 iwByGz">USDC</div>
+                  <div class="dodo__onyo6i-1 iwByGz">{{labelReceived}}</div>
                 </div>
                 <span class="dodo__sc-12irif8-1 fbjKLz"
                   ><svg
@@ -142,11 +144,11 @@
                 type="number"
                 inputmode="decimal"
                 class="dodo__qu0amn-3 dodo__sc-74lcca-3 iWLZXK fqGJMi"
-                value="0"
+                v-model="moneyReceived"
               />
             </div>
             <div class="dodo__sc-9junse-13 eGowmH">
-              <span>1 ETH = 4029.6018 USDC</span>
+              <span>{{usdtDefault}} {{labelSend}} = {{fintUsdDefault}} {{labelReceived}}</span>
               <div class="dodo__sc-9junse-14 NEDGi">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -222,6 +224,47 @@ export default {
       // we can passthrough onDialogCancel directly
       onCancelClick: onDialogCancel
     };
+  },
+   data() {
+    return {
+       imgSend:
+        "https://cdn-media.dodoex.io/USDT_e8b71b5f29/USDT_e8b71b5f29.png",
+      imgReceived: "https://i.ibb.co/jr0BDCZ/fintusd-icon.png",
+      labelSend: "USDT",
+      labelReceived: "FintUsd",
+      moneySend: 0,
+      moneyReceived: 0,
+      usdtDefault: 1000, 
+      fintUsdDefault: 1040
+    }
+  },
+  watch:{
+    moneySend(){
+       if(this.labelSend == "USDT"){
+        this.moneyReceived = (this.moneySend * 1.04).toFixed(1)
+      }
+      if(this.labelSend == "FintUsd"){
+        this.moneyReceived = (this.moneySend * 0.962).toFixed(1)
+      }
+    }
+  },
+
+  methods: {
+    intercambiar(){
+      var iconSend = this.imgSend
+      var iconReceived = this.imgReceived
+      var labelSend = this.labelSend
+      var labelReceived = this.labelReceived
+      var moneySend = this.moneySend
+      var moneyReceived = this.moneyReceived
+
+      this.imgSend = iconReceived
+      this.imgReceived = iconSend
+      this.labelSend = labelReceived
+      this.labelReceived = labelSend
+      this.moneySend = moneyReceived
+      this.moneyReceived = moneySend
+    }
   },
 };
 </script>
