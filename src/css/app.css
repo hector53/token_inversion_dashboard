@@ -24,6 +24,11 @@ body {
     font-size: 30px;
     font-weight: 700;
 }
+.text-h7{
+    color: #0d0c54!important;
+    font-size: 20px;
+    font-weight: 700;
+}
 .q-btn--rectangle {
     border-radius: 10px;
 }
@@ -421,4 +426,26 @@ input[type=number] {
 }
 .bg-black {
     background: #4c38f2!important;
+}
+.q-item__label {
+    font-size: 16px;
+}
+.item_APY{
+    background: rgba(235, 235, 235, 0.6);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: left;
+    padding-left: 15px;
+}
+.item_APY p{
+    display: flex;
+    align-items: center;
+}
+.item_APY p i{
+    font-size: 14px;
+    margin-right: 10px;
+}
+.item_APY p span{
+    font-size: 16px;
+    font-weight: bold;
 }

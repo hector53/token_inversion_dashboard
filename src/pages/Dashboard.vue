@@ -22,15 +22,42 @@
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding: 20px;">
  <q-card flat >
       <q-card-section class="row">
-        <div class="text-h6 text-weight-bolder text-grey-8">
+        <div class="text-h6 text-weight-bolder text-grey-8" >
          Deposit 100,254 USD
         </div>
+        
         <q-space></q-space>
         <q-btn class="text-capitalize btnCustom"  icon="north_east" color="black"></q-btn>
       </q-card-section>
-      <q-list >
-        <barChartDeposit />
-      </q-list>
+      <q-card-section class="row">
+         <div class="text-h7 text-weight-bolder text-grey-8" style="width: 100%">
+         APY 15.3%
+        </div>
+        <p class="text-grey-8">Tenor 6 mon</p>
+      </q-card-section>
+      <div class="row">
+        <div class="col-12 col-sm-3">
+          <div class="module_APY" style="margin-top: 10px;">
+              <div class="item_APY">
+                <p style="margin-top: 10px;">
+                  <q-icon name="arrow_downward"/> <span style="    font-weight: normal;    font-size: 13px;" >Received</span>
+                </p>
+                  <p><span>150235.04</span> <span style="font-size: 12px;    margin-left: 5px;">USD</span></p>
+              </div>
+              <div class="item_APY" style="margin-top: 20px;">
+                <p style="margin-top: 10px;">
+                  <q-icon name="north_east"/> <span style="    font-weight: normal;    font-size: 13px;" >Invested</span>
+                </p>
+                  <p><span>150235.04</span> <span style="font-size: 12px;    margin-left: 5px;">USD</span></p>
+              </div>
+          </div>
+       </div>
+        <div class="col-12 col-sm-9">
+          <barChartDeposit />
+        </div>
+      </div>
+ 
+        
     </q-card>
 
       </div>

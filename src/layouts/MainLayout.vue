@@ -2,29 +2,20 @@
   <q-layout view="hHh Lpr lff">
     <q-header elevated class="bg-white text-primary">
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          @click="toggleLeftDrawer"
-          icon="menu"
-          aria-label="Menu"
-        />
-        <q-toolbar-title style="    flex:2">
+      
+        <q-toolbar-title style="    flex:2; cursor: pointer;">
           <q-img
           src="https://uploads-ssl.webflow.com/616c304ef1493f7d6005ee62/616d9d362627deb1ff49b1a9_logo-fintelligentia_Mesa%20de%20trabajo%201-p-500.png"
           loading="lazy"
           spinner-color="white"
           class="brandF"
           style="max-width: 190px"
+          @click="toggleLeftDrawer"
           />
         </q-toolbar-title>
         <q-space/>
         <div class="q-gutter-sm row items-center no-wrap">
-          <q-btn size="20px" round dense flat  :icon="$q.fullscreen.isActive ? 'fullscreen_exit' : 'fullscreen'"
-                 @click="$q.fullscreen.toggle()"
-                 v-if="$q.screen.gt.sm">
-          </q-btn>
+        
           
           <q-btn round dense flat  icon="notifications" size="20px">
             <q-badge color="red"  floating>

@@ -23,7 +23,7 @@
           </p>
         </div>
         <p class="stacked-cards_tips__2SS2n stacked-cards_hidden__iBK7n">
-          <span>0%</span> more than Uniswap
+          Existe la cantidad de liquidez necesaria con slippage menor al <span>1%</span>
         </p>
       </div>
       <div class="stacked-cards_switchButtons__21RqP">
@@ -65,9 +65,6 @@ export default {
       this.labelReceived = labelSend
       this.moneySend = moneyReceived
       this.moneyReceived = moneySend
-
-
-      
     },
     openSwapModal() {
       this.$emit("openSwapModal");
