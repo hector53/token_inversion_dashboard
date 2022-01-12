@@ -9,6 +9,7 @@ const routes = [
       }
       },
       {path: '/Swap', component: () => import('pages/Swap.vue')},
+      {path: '/graficos', component: () => import('pages/graficos.vue')},
       
 
       // Not completed yet
