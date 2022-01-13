@@ -94,6 +94,15 @@
           </q-item-section>
         </q-item>
 
+         <q-item to="/graficos" class="qitemSidebar" :class="{'active': $route.path == '/graficos'}">
+          <q-item-section avatar>
+            <q-icon name="show_chart"/>
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Charts</q-item-label>
+          </q-item-section>
+        </q-item>
+
 
         
       </q-list>
