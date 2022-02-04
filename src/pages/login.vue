@@ -81,6 +81,7 @@ export default defineComponent({
                 console.log("store data", this.$store.state.myStore.user)
                 const { redirect = false } = this.$route.query
                 const path = redirect ? decodeURI(redirect) : '/'
+             //   Loading.hide()
                 this.$router.push({ path })
             }catch(e){
                 Loading.hide()

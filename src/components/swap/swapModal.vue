@@ -166,7 +166,8 @@
                 </svg>
               </div>
             </div>
-            <button
+            <button v-if="btnConectarBilletera>0"
+            :disabled="btnMetamaskEnable"
               type="button"
               class="
                 default
@@ -175,9 +176,12 @@
                 jkZCXP
                 bysMrZ
               "
+              @click="conectarBilletera"
             >
-              Conectar billetera
+              <span v-if="btnConectarBilletera==2">Comprar</span>
+              <span v-if="btnConectarBilletera==1">Conectar Billetera</span>
             </button>
+            <p v-if="btnConectarBilletera==0">No ethereum browser is installed. Try it installing MetaMask</p>
             <div class="dodo__sc-9junse-40 dALGWz"></div>
             <div
               class="dodo__sc-1q6rmg2-9 dodo__sc-9junse-15 aCAYE ehnWDv"
@@ -194,7 +198,9 @@
 </template>
 
 <script>
+import ContratoVenta from '../../contratos/contratoVenta.js'
 import { useDialogPluginComponent } from 'quasar'
+import { Cookies, Notify, Loading } from 'quasar'
 export default {
   props: {
     // ...your custom props
@@ -235,21 +241,50 @@ export default {
       moneySend: 0,
       moneyReceived: 0,
       usdtDefault: 1000, 
-      fintUsdDefault: 1040
+      fintUsdDefault: 1040, 
+      btnMetamask: false, 
+      btnMetamaskEnable: false, 
+      btnConectarBilletera: 0, 
+      currentAccount: ''
     }
   },
   watch:{
     moneySend(){
        if(this.labelSend == "USDT"){
-        this.moneyReceived = (this.moneySend * 1.04).toFixed(1)
+        this.moneyReceived = (this.moneySend * 1).toFixed(1)
       }
       if(this.labelSend == "FintUsd"){
-        this.moneyReceived = (this.moneySend * 0.962).toFixed(1)
+        this.moneyReceived = (this.moneySend * 1).toFixed(1)
       }
     }
   },
 
   methods: {
+   async conectarBilletera(){
+     if(this.btnConectarBilletera == 2){
+       //comprar
+       if(this.moneySend == 0){
+            this.$q.notify({
+            progress: true,
+            type:'negative',
+            message: 'Cantidad a pagar debe ser mayor que cero',
+            timeout: 2000
+            })
+            return false
+       }
+       this.btnMetamaskEnable = true
+       Loading.show();
+      var comprarToken = await ContratoVenta.comprarTokens(this.moneySend, this.currentAccount )
+      console.log(comprarToken.receipt.status)
+      this.$store.commit('myStore/setKeyTableBalance', this.$store.state.myStore.keyTableBalance+1)
+      this.onDialogHide()
+      Loading.hide();
+
+     }else{
+       //conectar
+       var  con = await ContratoVenta.loadWeb3()
+     }
+    },
     intercambiar(){
       var iconSend = this.imgSend
       var iconReceived = this.imgReceived
@@ -264,7 +299,62 @@ export default {
       this.labelReceived = labelSend
       this.moneySend = moneyReceived
       this.moneyReceived = moneySend
+    }, 
+    async guardarBilletera(address){
+      try{
+      const result = await this.$store.dispatch('myStore/save_wallet_user', address)
+      console.log(result)
+      }catch(e){
+      console.log("Error:")
+      console.log(e)
+      }
+},
+
+      handleAccountsChanged(accounts){
+      console.log("entrando al metodo",accounts)
+         if (accounts.length == 0) {
+    // MetaMask is locked or the user has not connected any accounts
+    console.log('Please connect to MetaMask.');
+    this.btnConectarBilletera = 1
+  } else if (accounts[0] !== this.currentAccount) {
+    this.currentAccount = accounts[0];
+    console.log("current account ", this.currentAccount)
+    this.btnConectarBilletera = 2
+    this.guardarBilletera(accounts[0])
+    // Do any other work!
+  }
+    },
+  },
+ async mounted() {
+
+
+if (window.ethereum) {
+      var accounts = await window.ethereum.request({ method: 'eth_accounts' })
+      console.log("accounts", accounts)
+      if(accounts.length == 0){
+          this.btnConectarBilletera = 1
+      }else{
+          this.btnConectarBilletera = 2
+          this.currentAccount = accounts[0]
+          await ContratoVenta.init()
+      }
+      window.ethereum.on('accountsChanged', this.handleAccountsChanged);
+      console.log("si esta conectado  a metamask");
+      
+    } else if (web3) {
+      web3 = new Web3(window.web3.currentProvider);
+      console.log("web3", web3);
+      this.btnConectarBilletera = 1
+    } else {
+      this.btnConectarBilletera = 0
+      console.log(
+        "No ethereum browser is installed. Try it installing MetaMask "
+      );
     }
+
+
+
+
   },
 };
 </script>

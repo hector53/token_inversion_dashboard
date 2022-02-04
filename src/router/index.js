@@ -1,7 +1,7 @@
 import { route } from 'quasar/wrappers'
 import { createRouter, createMemoryHistory, createWebHistory, createWebHashHistory } from 'vue-router'
 import routes from './routes'
-import { Cookies } from 'quasar'
+import { Cookies, Loading } from 'quasar'
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -27,6 +27,7 @@ export default route(function ( { store, ssrContext } ) {
   })
 
   Router.beforeEach(async (to, from, next) => {
+    
     const token = Cookies.get('authToken')
     if (to.matched.some(record => record.meta.requiresAuth)) {
       
@@ -36,6 +37,7 @@ export default route(function ( { store, ssrContext } ) {
           query: { redirect: to.fullPath }
         })
       } else {
+        Loading.show();
         console.log("consulto el validate")
         // we have a state.user object but
         // we need to check if the token is still valid
