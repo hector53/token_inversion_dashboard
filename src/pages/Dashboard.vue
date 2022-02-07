@@ -270,6 +270,10 @@ async guardarBilletera(address){
       try{
       const result = await this.$store.dispatch('myStore/save_wallet_user', address)
       console.log(result)
+         this.$store.commit(
+            "myStore/setKeyTableBalance",
+            this.$store.state.myStore.keyTableBalance + 1
+          );
       }catch(e){
       console.log("Error:")
       console.log(e)

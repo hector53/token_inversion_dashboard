@@ -1,6 +1,7 @@
-const hectorToken = artifacts.require("hectorToken.sol");
-const hectorTokenSale = artifacts.require("hectorTokenSale.sol");
+const tokenUsdt = artifacts.require("tokenUsdt.sol");
+const tokenFintUsd = artifacts.require("tokenFintUsd.sol");
+const tokenFintUsdSale = artifacts.require("tokenFintUsdSale.sol");
 module.exports = function (deployer) {
- //deployer.deploy(hectorToken);
- deployer.deploy(hectorTokenSale, 10000000000000, "0xda601d0ee2ac51d2e07c64d600695daf45d1ded5");
+ //deployer.deploy(tokenFintUsd);
+   deployer.deploy(tokenFintUsdSale,  "0x3Ed92B5d24cF2de91B8d930Da7aA3dB4B0EE99eD");
 };

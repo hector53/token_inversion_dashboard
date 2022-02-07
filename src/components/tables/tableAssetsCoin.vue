@@ -45,18 +45,14 @@ export default defineComponent({
   },
   async mounted() {
     await   ContratoVenta.loadWeb3()
-    await ContratoVenta.loadContractToken()
-    var address = "0x5982CB141d0F6E9aACE7Acc61CaD0ABB6256b7FE"
-    var balance = await ContratoVenta.hectorToken.balanceOf(address)
-    console.log("balance", parseInt(balance))
-
+    await ContratoVenta.loadContractTokenFintUsd()
     try{
     const result = await this.$store.dispatch('myStore/get_wallets_user')
     console.log(result)
     if(result.status == 1){
         for(var i=0; i<result.wallets.length; i++){
           console.log(result.wallets[i])
-           var balance = await ContratoVenta.hectorToken.balanceOf( result.wallets[i].address )
+           var balance = await ContratoVenta.tokenFintUsd.balanceOf( result.wallets[i].address )
            balance = balance /10**18
           this.arrayWallets.push({
             address: result.wallets[i].address,

@@ -20,6 +20,10 @@
 
  const HDWalletProvider = require('@truffle/hdwallet-provider');
  const privateKeys = [
+  'b3aa8867dc4729e183b15c8af5bfde6f63f18f486e4c26ac4bbd19f2e84c9ece',
+];
+
+const privateKeysTestnet = [
   '70a093e4c2e80a707030995d6437a110dfbe581b0765f78478547ea06af2ece5',
 ];
 //
@@ -44,11 +48,11 @@ module.exports = {
     // tab if you use this network and you must also set the `host`, `port` and `network_id`
     // options below to some value.
     //
-    // development: {
-    //  host: "127.0.0.1",     // Localhost (default: none)
-    //  port: 8545,            // Standard Ethereum port (default: none)
-    //  network_id: "*",       // Any network (default: none)
-    // },
+    /* development: {
+      host: "127.0.0.1",     // Localhost (default: none)
+      port: 8545,            // Standard Ethereum port (default: none)
+      network_id: "*",       // Any network (default: none)
+     },*/
     // Another network with more advanced options...
     // advanced: {
     // port: 8777,             // Custom port
@@ -61,13 +65,30 @@ module.exports = {
     // Useful for deploying to a public network.
     // NB: It's important to wrap the provider as a function.
      ropsten: {
-     provider: () => new HDWalletProvider(privateKeys, `https://ropsten.infura.io/v3/92a22960977f4ad682ce6ca9a743423e`),
+     provider: () => new HDWalletProvider(privateKeys, 'https://ropsten.infura.io/v3/92a22960977f4ad682ce6ca9a743423e'),
+     networkCheckTimeout: 10000, 
      network_id: 3,       // Ropsten's id
-     gas: 5500000,        // Ropsten has a lower block limit than mainnet
+      gas: 3000000,        // Ropsten has a lower block limit than mainnet
      confirmations: 2,    // # of confs to wait between deployments. (default: 0)
      timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
      skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
      },
+
+     testnet: {
+      provider: () => new HDWalletProvider(privateKeysTestnet, `https://data-seed-prebsc-1-s1.binance.org:8545`),
+      networkCheckTimeout: 10000, 
+      network_id: 97,
+      confirmations: 10,
+      timeoutBlocks: 200,
+      skipDryRun: true
+    },
+    bsc: {
+      provider: () => new HDWalletProvider('', `https://bsc-dataseed1.binance.org`),
+      network_id: 56,
+      confirmations: 10,
+      timeoutBlocks: 200,
+      skipDryRun: true
+    },
     // Useful for private networks
     // private: {
     // provider: () => new HDWalletProvider(mnemonic, `https://network.io`),
@@ -86,13 +107,13 @@ module.exports = {
     solc: {
       version: "0.8.11",    // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
-      // settings: {          // See the solidity docs for advice about optimization and evmVersion
-      //  optimizer: {
-      //    enabled: false,
-      //    runs: 200
-      //  },
+       settings: {          // See the solidity docs for advice about optimization and evmVersion
+        optimizer: {
+          enabled: false,
+          runs: 200
+        },
       //  evmVersion: "byzantium"
-      // }
+       }
     }
   },
 
