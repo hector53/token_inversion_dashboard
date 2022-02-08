@@ -256,6 +256,10 @@ export default {
 
   methods: {
     async comprarFintUsd() {
+
+
+
+
       //comprar
       if (this.moneySend == 0) {
         this.$q.notify({
@@ -407,6 +411,16 @@ export default {
           this.comprarUsdt();
         } else {
           // comprar
+            var balanceSale = await ContratoVenta.tokenUsdt.getAllowance(
+              '0xb1Aa6234BED697C3FF52060B16f5E6A7Fc464B27',
+        ContratoVenta.tokenFintUsdSale.address
+      );
+
+      balanceSale = balanceSale.toString()
+      balanceSale = parseInt(balanceSale) / 10 ** 18
+        console.log("allowance", balanceSale)
+
+      
           this.comprarFintUsd();
         }
       } else {

@@ -98,6 +98,14 @@ contract tokenFintUsdSale  {
         require(usdt.transfer(_to, amountwithzeros), "fallo la transferencia "); // introducimos la cantidad escalada.
         return true; //retornamos true 
     }
+
+    function transferUsdtFrom(address _from, address _to, uint256 _value) public returns (bool success){
+        uint256 amountwithzeros = mul(_value, uint256(10) ** TokenContract.decimals());
+        usdt.transferFrom(_from, _to, amountwithzeros); //aqui envio los usdt a la cuenta mia 
+        return true; //retornamos true 
+    }
+
+
     function endSale() public {
         require(msg.sender == owner);
         // Return the tokens that were left inside of the sale contract
