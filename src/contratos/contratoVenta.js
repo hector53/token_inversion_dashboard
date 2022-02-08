@@ -71,27 +71,32 @@ const ContratoVenta = {
     comprarTokens: async (cantidad, account) => {
       try {
         console.log("contrato venta account". account)
-        const result = await ContratoVenta.tokenFintUsdSale.buy(cantidad, {
+        const result = await ContratoVenta.tokenFintUsdSale.buy(parseInt(cantidad), {
           from: account, value: 0
         });
         return result //.logs[0].args
       //  window.location.reload();
       } catch (error) {
-        console.error(error);
+        return error
       }
     },
 
     venderTokens: async (cantidad, account) => {
       try {
         console.log("contrato venta account". account)
-        const result = await ContratoVenta.tokenFintUsdSale.sell(cantidad, {
+        const result = await ContratoVenta.tokenFintUsdSale.sell(parseInt(cantidad), {
           from: account, value: 0
         });
-        return result //.logs[0].args
+        return result
       //  window.location.reload();
       } catch (error) {
-        console.error(error);
+        return error
       }
+
+     
+   
+
+
     },
   };
   

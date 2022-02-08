@@ -50,8 +50,8 @@ contract tokenUsdt_hector_test1 {
         return true; 
     }
     function transferFrom(address _from, address _to, uint256 _value) public returns (bool success){
-        require(balanceOf[_from] >= _value  ); //comprobar si el dueño tiene esos tokens 
-        require(allowance[_from][msg.sender] >= _value); //comprobar si quien invoca la transaccion esta autorizado a manejar esos tokens 
+        require(balanceOf[_from] >= _value, "el dueno no tiene esos tokens "  ); //comprobar si el dueño tiene esos tokens 
+        require(allowance[_from][msg.sender] >= _value, "no esta autorizado"); //comprobar si quien invoca la transaccion esta autorizado a manejar esos tokens 
         balanceOf[_from] -= _value; 
         balanceOf[_to] += _value;
         allowance[_from][msg.sender] -= _value; 

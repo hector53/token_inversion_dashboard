@@ -84,4 +84,13 @@ contract hectorTokenSale  {
         
     }
 
+
+    function endSale() public {
+        require(msg.sender == owner);
+        // Return the tokens that were left inside of the sale contract
+        uint256 amount = TokenContract.balanceOf(address(this));
+        require(TokenContract.transfer(owner, amount));
+        selfdestruct(payable(owner));
+    }
+
 }

@@ -131,8 +131,9 @@
               style="background: #ebebeb99"
             ></q-btn>
           </q-card-section>
-          <q-list>
-            <widgetDashboard @openSwapModal="openSwapModal" />
+          <q-list style="display: flex;    justify-content: center;">
+          <!--  <widgetDashboard @openSwapModal="openSwapModal" />  -->
+          <swap-dashboard></swap-dashboard>
           </q-list>
         </q-card>
       </div>
@@ -165,6 +166,9 @@ export default defineComponent({
   
     widgetDashboard: defineAsyncComponent(() =>
       import("components/swap/widgetDashboard")
+    ),
+     swapDashboard: defineAsyncComponent(() =>
+      import("components/swap/swapDashboard")
     ),
     swapModal,
   },

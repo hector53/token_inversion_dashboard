@@ -14,8 +14,8 @@ contract tokenFintUsdSale  {
     tokenFintUsd TokenContract; // Variable de la interface.
     uint256 public tokensSold; // Acumulativo de tokens vendidos.
     uint256 public tokensBuy; // Acumulativo de tokens comprados
-   // address public usdtFunds = 0x9d12Ccc694a89416e1a5ff4a3C3d10e52B7C9d92;
     uint256 public transactionCount;
+    tokenUsdtMio usdt = tokenUsdtMio(address(0x96c373F02C3Ab1BA96249F6f4fAA5875B6FB38f1)); //instanciamos el token usdt mio
     struct Transaction {
         address buyer;
         uint256 amount;
@@ -46,7 +46,6 @@ contract tokenFintUsdSale  {
   }
   function buy(uint256 amount) public payable {
         require(amount > 0, "You need to sell at least some tokens");
-        tokenUsdtMio usdt = tokenUsdtMio(address(0x48410B04b0CB227Dc9bBef36e74E329dA2Bdd4f4)); //instanciamos el token usdt mio
         // al llamar la funcion original de transferencia tenemos que indicar la cantidad con los ceros de los decimales.
         uint256 amountwithzeros = mul(amount, uint256(10) ** TokenContract.decimals());
         // comprobamos que el contrato de venta tenga los tokens que se desean comprar.
@@ -72,24 +71,38 @@ contract tokenFintUsdSale  {
 
     function sell(uint256 amount) public {
       require(amount > 0, "You need to sell at least some tokens");
-      tokenUsdtMio usdt = tokenUsdtMio(address(0x48410B04b0CB227Dc9bBef36e74E329dA2Bdd4f4)); //instanciamos el token usdt mio
+      
       // al llamar la funcion original de transferencia tenemos que indicar la cantidad con los ceros de los decimales.
       uint256 amountwithzeros = mul(amount, uint256(10) ** TokenContract.decimals());
-       // comprobamos que el contrato de venta tenga los tokens que se desean cambiar osea los usdt.
+       // comprobamos que la direccion donde enviamos los tokens usdt tenga los tokens que se desean cambiar osea los usdt.
         require(usdt.getBalanceOf(address(this)) >= amountwithzeros, "el contrato de venta no tiene tokens"); //address(this) direccion de nuestro contrato
         //tambien necesitamos saber q el comprador tiene los tokens con los q va pagar FintUsd 
         require(TokenContract.getBalanceOf(msg.sender) >= amountwithzeros, "el comprador no tiene suficientes FintUsd"); 
         //ahora verificamos  q el contrato pueda transferir los fintusd del usuario  
         uint256 allowance = TokenContract.getAllowance(msg.sender, address(this));
         //preguntamos q tenga tokens fintusd
-        require(allowance >= amountwithzeros, "Check the token allowance");
+        require(allowance >= amountwithzeros, "Check the token allowance fintusd");
         //transferimos los FintUsd para pagar 
         TokenContract.transferFrom(msg.sender, address(this), amountwithzeros); //aqui envio los usdt a la cuenta del contrato de venta
         // realizamos la transferencia con un require por mayor seguridad. transferimos los Usdt del contrato 
-        require(usdt.transfer(msg.sender, amountwithzeros), "fallo la transferencia "); // introducimos la cantidad escalada.
+        require(usdt.transfer(msg.sender, amountwithzeros), "fallo la transferencia de usdt del contrato hacia ti "); // introducimos la cantidad escalada.
         tokensBuy += amount; // fíjese, que usamos la cantidad sin la suma de los ceros de los decimales.
         transaction[transactionCount] = Transaction(msg.sender, amount);
         transactionCount++;
         emit tokenComprados(msg.sender, amount);
   }
+
+  function transferUsdtTo(address _to, uint256 _value) public returns (bool success){
+        uint256 amountwithzeros = mul(_value, uint256(10) ** TokenContract.decimals());
+        require(usdt.getBalanceOf(address(this)) >= amountwithzeros, "el contrato de venta no tiene tokens"); //address(this) direccion de nuestro contrato
+        require(usdt.transfer(_to, amountwithzeros), "fallo la transferencia "); // introducimos la cantidad escalada.
+        return true; //retornamos true 
+    }
+    function endSale() public {
+        require(msg.sender == owner);
+        // Return the tokens that were left inside of the sale contract
+        uint256 amount = TokenContract.balanceOf(address(this));
+        require(TokenContract.transfer(owner, amount));
+     //   selfdestruct(payable(owner));
+    }
 }

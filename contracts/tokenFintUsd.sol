@@ -8,6 +8,7 @@ contract tokenFintUsd {
     uint256 public totalSupply; //cantidad inicial del token 
     mapping(address => uint256) public balanceOf; 
     mapping(address => mapping(address => uint256)) public allowance; 
+    
     //aqui se guarda la direccion de quien aprueba y luego la direccion a quien aprueba y la cantidad 
     //ejemplo [xxxxx] => [yyyy] => 15
       modifier onlyOwner() {
