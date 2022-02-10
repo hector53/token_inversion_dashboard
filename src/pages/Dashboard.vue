@@ -166,6 +166,7 @@ export default defineComponent({
           // MetaMask is locked or the user has not connected any accounts
           console.log("Please connect to MetaMask.");
           this.$store.commit("myStore/setBtnConectarBilletera", 1);
+          Loading.hide()
         } else if (accounts[0] !== this.$store.state.myStore.currentAccount) {
           this.$store.commit("myStore/setCurrentAccount", accounts[0]);
           console.log("current account ", accounts[0]);
