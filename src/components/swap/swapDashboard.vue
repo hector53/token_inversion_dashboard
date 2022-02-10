@@ -473,7 +473,7 @@ export default {
     },
   },
   async mounted() {
-    if (window.ethereum) {
+  /*  if (window.ethereum) {
       var accounts = await window.ethereum.request({ method: "eth_accounts" });
       console.log("accounts", accounts);
       if (accounts.length == 0) {
@@ -494,7 +494,7 @@ export default {
       console.log(
         "No ethereum browser is installed. Try it installing MetaMask "
       );
-    }
+    }*/
   },
 };
 </script>

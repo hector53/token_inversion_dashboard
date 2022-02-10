@@ -20,3 +20,12 @@ export const  setKeyTableBalance =  (state, val) => {
     state.keyTableBalance = val
 }
 
+export const  setBtnConectarBilletera =  (state, val) => {
+    state.btnConectarBilletera = val
+}
+
+export const  setCurrentAccount =  (state, val) => {
+    state.currentAccount = val
+}
+
+

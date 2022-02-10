@@ -1,27 +1,24 @@
 <template>
-    <q-table flat  :rows="arrayWallets" v-if="arrayWallets.length>0" :columns="columns" hide-bottom>
-    </q-table>
-    <q-spinner
-    style="width: 100%; text-align:center"
-        color="primary"
-        size="3em"
-        :thickness="10"
-        v-else
-      />
+  <q-table
+    flat
+    :rows="arrayWallets"
+    v-if="arrayWallets.length > 0"
+    :columns="columns"
+    hide-bottom
+  >
+  </q-table>
+  <q-spinner
+    style="width: 100%; text-align: center"
+    color="primary"
+    size="3em"
+    :thickness="10"
+    v-else
+  />
 </template>
 
 <script>
-import {defineComponent} from 'vue'
+import { defineComponent } from "vue";
 import ContratoVenta from "../../contratos/contratoVenta.js";
-
-
-const columns = [
-  {name: 'address', label: 'Address', field: 'address', sortable: true, align: 'left'},
-  {name: 'price', label: 'Price', field: 'price', sortable: true, align: 'left'},
-  {name: 'value', label: 'Value', field: 'value', sortable: true, align: 'left'},
-  {name: 'balance', label: 'Balance ', field: 'balance', sortable: false, align: 'center'}
-];
-
 
 export default defineComponent({
   name: "TableActions",
@@ -29,49 +26,56 @@ export default defineComponent({
   data() {
     return {
       spinnerLoading: true,
-      arrayWallets: [], 
+      arrayWallets: [],
       columns: [
-  {name: 'address', label: 'Address', field: 'address', sortable: true, align: 'left'},
-  {name: 'price', label: 'Price', field: 'price', sortable: true, align: 'left'},
-  {name: 'value', label: 'Value', field: 'value', sortable: true, align: 'left'},
-  {name: 'balance', label: 'Balance ', field: 'balance', sortable: false, align: 'center'}
-]
-       
-    }
+        {
+          name: "token",
+          label: "Token",
+          field: "token",
+          sortable: true,
+          align: "left",
+        },
+        {
+          name: "precio",
+          label: "Precio",
+          field: "precio",
+          sortable: true,
+          align: "left",
+        },
+        {
+          name: "APY",
+          label: "apy",
+          field: "apy",
+          sortable: true,
+          align: "left",
+        },
+        {
+          name: "balance",
+          label: "Balance ",
+          field: "balance",
+          sortable: false,
+          align: "center",
+        },
+      ],
+    };
   },
 
-  methods: {
-    
-  },
+  methods: {},
   async mounted() {
-    await   ContratoVenta.loadWeb3()
-    await ContratoVenta.loadContractTokenFintUsd()
-    try{
-    const result = await this.$store.dispatch('myStore/get_wallets_user')
-    console.log(result)
-    if(result.status == 1){
-        for(var i=0; i<result.wallets.length; i++){
-          console.log(result.wallets[i])
-           var balance = await ContratoVenta.tokenFintUsd.balanceOf( result.wallets[i].address )
-           balance = balance /10**18
-          this.arrayWallets.push({
-            address: result.wallets[i].address,
-            price: 1.000,
-            value: balance,
-            balance: balance * 1,
-          })
-        }
-    }
-    }catch(e){
-    console.log("Error:")
-    console.log(e)
-    }
-
-
+    
+    console.log("account ", this.$store.state.myStore.currentAccount);
+    var balance = await ContratoVenta.tokenFintUsd.balanceOf(
+      this.$store.state.myStore.currentAccount
+    );
+      balance = balance / 10 ** 18;
+      this.arrayWallets.push({
+        token: "FintUsd",
+        precio: "1$",
+        apy: "22.5%",
+        balance: balance,
+      });
   },
-})
+});
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

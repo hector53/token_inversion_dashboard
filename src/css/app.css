@@ -33,7 +33,8 @@ body {
     border-radius: 10px;
 }
 .btnCustom{
-    padding: 10px!important
+    padding: 10px!important;
+    transform: rotate(90deg);
 }
 
 /*widget swap*/
@@ -447,5 +448,114 @@ input[type=number] {
 }
 .item_APY p span{
     font-size: 16px;
+    font-weight: bold;
+}
+.btnConectarBilletera{
+    background-color: #e4e6e7;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+}
+
+.btnConectarBilletera:hover{
+    background-color: #d3d4d4;
+}
+
+
+.btnAddress{
+    background-color: #e4e6e7;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+}
+
+.btnAddress:hover{
+    background-color: #d3d4d4;
+}
+
+.btnAddress span {
+    white-space: nowrap;
+    overflow: hidden;
+    display:inline-block;
+}
+.btnAddress span:first-child {
+    width: 40px;
+    text-overflow: ellipsis;
+}
+.btnAddress span + span {
+    width: 75px;
+    direction:rtl;
+    text-align:right;
+}
+.intercambiarTokens{
+    max-width: 400px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-top: 20px;
+}
+
+.cubreIntercambio{
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.titleIntercambio{
+    font-size: 20px;
+    margin-right: 20px;
+    width: 60px;
+    display: inline-block;
+}
+.inputIntercambiar{
+    border: none;
+    padding: 7px;
+    border-radius: 10px;
+    background-color: #e4e6e7;
+    font-size: 20px;
+    color: #0d0c54;
+    font-weight: bold;
+    max-width: 120px;
+    outline: none;
+}
+.titleTokenDropdown{
+    font-size: 20px;
+    font-weight: bold;
+}
+#btnDropdownIntercambiarTokens{
+    outline: none;
+}
+#btnDropdownIntercambiarTokens .q-focusable:focus .q-hoverable:hover{
+    background: inherit!important;
+opacity: 0!important;
+}
+
+.itemDropdownIntercambiarTokens{
+    font-size: 20px;
+}
+.btnComprarToken{
+    background-color: #0d0c54;
+    font-size: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+.btnComprarToken span{
+    text-transform: uppercase;
+}
+.transaccionPendienteMsj{
+    font-size: 20px;
+    text-align: center;
+    line-height: 2;
+    margin-top: 20px;
     font-weight: bold;
 }

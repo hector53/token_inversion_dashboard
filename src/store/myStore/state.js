@@ -3,6 +3,8 @@ export default function () {
     user: null, 
     metamaskStatus: false, 
     contratoVenta: {}, 
-    keyTableBalance: 0
+    keyTableBalance: 0, 
+    btnConectarBilletera: 0, 
+    currentAccount: '', 
   }
 }

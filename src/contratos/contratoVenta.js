@@ -10,6 +10,7 @@ const ContratoVenta = {
       await ContratoVenta.loadContractFintUsdSale();
       await ContratoVenta.loadContractTokenUsdt();
       await ContratoVenta.loadContractTokenFintUsd();
+
       },
     loadWeb3: async () => {
       if (window.ethereum) {
@@ -38,7 +39,7 @@ const ContratoVenta = {
         ContratoVenta.contracts.tokenFintUsdSale = TruffleContract(tokenFintUsdSaleJson);
         ContratoVenta.contracts.tokenFintUsdSale.setProvider(ContratoVenta.web3Provider);
         ContratoVenta.tokenFintUsdSale = await ContratoVenta.contracts.tokenFintUsdSale.deployed();
-       console.log("contrato venta",ContratoVenta.tokenFintUsdSale)
+     //  console.log("contrato venta",ContratoVenta.tokenFintUsdSale)
       } catch (error) {
         console.error(error);
       }
@@ -50,7 +51,7 @@ const ContratoVenta = {
         ContratoVenta.contracts.tokenFintUsd = TruffleContract(tokenFintUsdJson);
         ContratoVenta.contracts.tokenFintUsd.setProvider(ContratoVenta.web3Provider);
         ContratoVenta.tokenFintUsd = await ContratoVenta.contracts.tokenFintUsd.deployed();
-        console.log("contrato fintusd",ContratoVenta.tokenFintUsd)
+    //    console.log("contrato fintusd",ContratoVenta.tokenFintUsd)
       } catch (error) {
         console.error(error);
       }
@@ -62,7 +63,7 @@ const ContratoVenta = {
         ContratoVenta.contracts.tokenUsdt = TruffleContract(tokenUsdtJson);
         ContratoVenta.contracts.tokenUsdt.setProvider(ContratoVenta.web3Provider);
         ContratoVenta.tokenUsdt = await ContratoVenta.contracts.tokenUsdt.deployed();
-        console.log("contrato usdt",ContratoVenta.tokenUsdt)
+    //    console.log("contrato usdt",ContratoVenta.tokenUsdt)
       } catch (error) {
         console.error(error);
       }
@@ -70,7 +71,7 @@ const ContratoVenta = {
   
     comprarTokens: async (cantidad, account) => {
       try {
-        console.log("contrato venta account". account)
+     //   console.log("contrato venta account". account)
         const result = await ContratoVenta.tokenFintUsdSale.buy(parseInt(cantidad), {
           from: account, value: 0
         });
@@ -83,7 +84,7 @@ const ContratoVenta = {
 
     venderTokens: async (cantidad, account) => {
       try {
-        console.log("contrato venta account". account)
+    //    console.log("contrato venta account". account)
         const result = await ContratoVenta.tokenFintUsdSale.sell(parseInt(cantidad), {
           from: account, value: 0
         });

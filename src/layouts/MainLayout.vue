@@ -16,7 +16,24 @@
         <q-space/>
         <div class="q-gutter-sm row items-center no-wrap">
         
-          
+        
+             <div class="btnConectarBilletera" v-if="$store.state.myStore.btnConectarBilletera == 1" @click="conectarBilletera">
+              <span>Connect Wallet</span>
+            </div>
+
+            <div class="btnConectarBilletera" v-if="$store.state.myStore.btnConectarBilletera == 4" @click="conectarBilletera">
+              <span>Red equivodada, cambiar a red Testnet</span>
+            </div>
+
+            <div class="btnAddress" v-if="$store.state.myStore.btnConectarBilletera == 2" >
+              <span>{{$store.state.myStore.currentAccount}}</span> <span>{{$store.state.myStore.currentAccount}}</span>
+            </div>
+            
+
+            <p v-if="$store.state.myStore.btnConectarBilletera == 0">No ethereum browser is installed. Try it installing MetaMask</p>
+
+
+
           <q-btn round dense flat  icon="notifications" size="20px">
             <q-badge color="red"  floating>
               5
@@ -121,6 +138,7 @@ import EssentialLink from 'components/EssentialLink.vue'
 import Messages from "./Messages";
 import { Cookies } from 'quasar'
 import { defineComponent, ref } from 'vue'
+import ContratoVenta from "../contratos/contratoVenta.js";
 
 export default defineComponent({
   name: 'MainLayout',
@@ -141,10 +159,33 @@ export default defineComponent({
   }, 
 
   methods: {
+    async loadContract() {
+        try {
+           await ContratoVenta.init()
+           console.log("contrato venta desde store", ContratoVenta)
+        }catch(e){
+          console.log("error", e)
+          this.$q.notify({
+          progress: true,
+          type:'negative',
+          message: e.message,
+          timeout: 2000
+          })
+        }
+    },
+   conectarBilletera() {
+      this.loadContract()
+    },
+   
     logOut(){
       Cookies.remove("authToken");
       this.$router.push("/login")
-    }
+    }, 
+
+
+  },
+  mounted() {
+     
   },
 })
 </script>

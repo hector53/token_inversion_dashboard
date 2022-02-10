@@ -1,5 +1,5 @@
 <template>
-  <q-page class="q-pa-sm" style="    margin-bottom: 50px;">
+  <q-page class="q-pa-sm" style="margin-bottom: 50px">
     <div class="row q-col-gutter-sm q-py-sm">
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding: 20px">
         <q-card flat>
@@ -84,34 +84,17 @@
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding: 20px">
         <q-card flat>
           <q-card-section class="row" style="align-items: center">
-            <div class="text-h6 text-weight-bolder text-grey-8">
-              FintUsd Balance
-            </div>
+            <div class="text-h6 text-weight-bolder text-grey-8">Balance</div>
             <q-space></q-space>
-
-            <button
-              type="button"
-              class="default dodo__sc-142t8zn-0 dodo__sc-1o1su6q-0 dodo__sc-1o1su6q-1 knVUHO jkZCXP bysMrZ"
-              style="width: auto"
-              @click="conectarBilletera"
-              v-if="btnConectarBilletera == 1 "
-            >
-              <span>Conectar Billetera</span>
-            </button>
-            <q-btn
-              v-if="btnConectarBilletera == 2 "
-              class="text-capitalize btnCustom"
-              icon="search"
-              flat
-              color="grey-4"
-              text-color="black"
-              unelevated
-              style="background: #ebebeb99"
-            ></q-btn>
           </q-card-section>
-          <q-list >
-            <p v-if="btnConectarBilletera == 0">No ethereum browser is installed. Try it installing MetaMask</p>
-            <tableAssetsCoin v-if="btnConectarBilletera == 2" :key="$store.state.myStore.keyTableBalance"/>
+          <q-list>
+            <tableAssetsCoin
+              v-if="
+                $store.state.myStore.btnConectarBilletera == 2 &&
+                contratoVentaCargado
+              "
+              :key="$store.state.myStore.keyTableBalance"
+            />
           </q-list>
         </q-card>
       </div>
@@ -119,22 +102,11 @@
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="padding: 20px">
         <q-card flat>
           <q-card-section class="row">
-            <div class="text-h6 text-weight-bolder text-grey-8">SWAP</div>
-            <q-space></q-space>
-            <q-btn
-              class="text-capitalize btnCustom"
-              icon="swap_horiz"
-              flat
-              color="grey-4"
-              text-color="black"
-              unelevated
-              style="background: #ebebeb99"
-            ></q-btn>
+            <div class="text-h6 text-weight-bolder text-grey-8">Intercambiar Tokens</div>
+       
+            
           </q-card-section>
-          <q-list style="display: flex;    justify-content: center;">
-          <!--  <widgetDashboard @openSwapModal="openSwapModal" />  -->
-          <swap-dashboard></swap-dashboard>
-          </q-list>
+            <intercambiar-tokens v-if="contratoVentaCargado" ></intercambiar-tokens>
         </q-card>
       </div>
     </div>
@@ -153,7 +125,6 @@ import { useStore } from "vuex";
 export default defineComponent({
   name: "PageIndex",
   components: {
-  
     lineChartsbalance: defineAsyncComponent(() =>
       import("components/charts/lineChartsbalance")
     ),
@@ -163,174 +134,147 @@ export default defineComponent({
     tableAssetsCoin: defineAsyncComponent(() =>
       import("components/tables/tableAssetsCoin")
     ),
-  
+
     widgetDashboard: defineAsyncComponent(() =>
       import("components/swap/widgetDashboard")
     ),
-     swapDashboard: defineAsyncComponent(() =>
+    swapDashboard: defineAsyncComponent(() =>
       import("components/swap/swapDashboard")
+    ),
+     intercambiarTokens: defineAsyncComponent(() =>
+      import("components/swap/intercambiarTokens")
     ),
     swapModal,
   },
-  setup() {
-    const $store = useStore();
-    const $q = useQuasar();
 
-  
-
-    return {
-      mode: "list",
-      messages: [
-        {
-          id: 5,
-          name: "Pratik Patel",
-          msg:
-            " -- I'll be in your neighborhood doing errands this\n" +
-            "            weekend. Do you want to grab brunch?",
-          avatar: "https://avatars2.githubusercontent.com/u/34883558?s=400&v=4",
-          time: "10:42 PM",
-        },
-        {
-          id: 6,
-          name: "Winfield Stapforth",
-          msg:
-            " -- I'll be in your neighborhood doing errands this\n" +
-            "            weekend. Do you want to grab brunch?",
-          avatar: "https://cdn.quasar.dev/img/avatar6.jpg",
-          time: "11:17 AM",
-        },
-        {
-          id: 1,
-          name: "Boy",
-          msg:
-            " -- I'll be in your neighborhood doing errands this\n" +
-            "            weekend. Do you want to grab brunch?",
-          avatar: "https://cdn.quasar.dev/img/boy-avatar.png",
-          time: "5:17 AM",
-        },
-        {
-          id: 2,
-          name: "Jeff Galbraith",
-          msg:
-            " -- I'll be in your neighborhood doing errands this\n" +
-            "            weekend. Do you want to grab brunch?",
-          avatar: "https://cdn.quasar.dev/team/jeff_galbraith.jpg",
-          time: "5:17 AM",
-        },
-        {
-          id: 3,
-          name: "Razvan Stoenescu",
-          msg:
-            " -- I'll be in your neighborhood doing errands this\n" +
-            "            weekend. Do you want to grab brunch?",
-          avatar: "https://cdn.quasar.dev/team/razvan_stoenescu.jpeg",
-          time: "5:17 AM",
-        },
-      ],
-
-      openSwapModal() {
-        $q.dialog({
-          component: swapModal,
-          ok: false,
-        })
-          .onOk(() => {
-            // console.log('OK')
-          })
-          .onCancel(() => {
-            // console.log('Cancel')
-          })
-          .onDismiss(() => {
-            // console.log('I am triggered on both OK and Cancel')
-          });
-      },
-    };
-  },
   data() {
     return {
       btnConectarBilletera: 0,
-      currentAccount: ''
-      //0 = metamask no instalado 
-      //1 = cuenta no conectada 
-      //2 = cuenta conectada 
+      currentAccount: "",
+      contratoVentaCargado: false,
+      chainId: 0,
+      //0 = metamask no instalado
+      //1 = cuenta no conectada
+      //2 = cuenta conectada
     };
   },
   methods: {
-    handleAccountsChanged(accounts){
-      console.log("entrando al metodo",accounts)
-         if (accounts.length == 0) {
-    // MetaMask is locked or the user has not connected any accounts
-    console.log('Please connect to MetaMask.');
-    this.btnConectarBilletera = 1
-  } else if (accounts[0] !== this.currentAccount) {
-    this.currentAccount = accounts[0];
-    console.log("current account ", this.currentAccount)
-    this.btnConectarBilletera = 2
-    this.guardarBilletera(accounts[0])
-    // Do any other work!
-  }
-    },
-
-async guardarBilletera(address){
-      try{
-      const result = await this.$store.dispatch('myStore/save_wallet_user', address)
-      console.log(result)
-         this.$store.commit(
+    handleAccountsChanged(accounts) {
+      if (this.chainId == 97) {
+        console.log("entrando al metodo", accounts);
+        if (accounts.length == 0) {
+          // MetaMask is locked or the user has not connected any accounts
+          console.log("Please connect to MetaMask.");
+          this.$store.commit("myStore/setBtnConectarBilletera", 1);
+        } else if (accounts[0] !== this.$store.state.myStore.currentAccount) {
+          this.$store.commit("myStore/setCurrentAccount", accounts[0]);
+          console.log("current account ", accounts[0]);
+          this.$store.commit("myStore/setBtnConectarBilletera", 2);
+          this.$store.commit(
             "myStore/setKeyTableBalance",
             this.$store.state.myStore.keyTableBalance + 1
           );
-      }catch(e){
-      console.log("Error:")
-      console.log(e)
+          this.loadContract();
+          this.guardarBilletera(accounts[0]);
+          // Do any other work!
+        }else{
+           this.$store.commit("myStore/setCurrentAccount", accounts[0]);
+          console.log("current account ", accounts[0]);
+          this.$store.commit("myStore/setBtnConectarBilletera", 2);
+          this.$store.commit(
+            "myStore/setKeyTableBalance",
+            this.$store.state.myStore.keyTableBalance + 1
+          );
+          this.loadContract();
+        }
       }
-},
+    },
 
+    async guardarBilletera(address) {
+      try {
+        const result = await this.$store.dispatch(
+          "myStore/save_wallet_user",
+          address
+        );
+      } catch (e) {
+        console.log("Error:");
+        console.log(e);
+      }
+    },
+transactionHash(hash){
+console.log("transaccion hash desde el dashboard", hash)
+},
     conectarBilletera() {
-      this.loadContract()
+      this.loadContract();
     },
     async loadContract() {
-   
+      try {
+        await ContratoVenta.init();
+        this.contratoVentaCargado = true;
+        Loading.hide();
+      } catch (e) {
+        console.log("error", e);
+        this.$q.notify({
+          progress: true,
+          type: "negative",
+          message: e.message,
+          timeout: 2000,
+        });
+      }
+    },
 
-    try {
-  
-    await ContratoVenta.init()
-    
-    }catch(e){
-    console.log("error", e)
-    this.$q.notify({
-            progress: true,
-            type:'negative',
-            message: e.message,
-            timeout: 2000
-            })
-    }
+    async chainChanged(chainId) {
+      chainId = parseInt(chainId, 16);
+      this.chainId = chainId;
+      console.log("chainId", chainId);
+      if (chainId != 97) {
+        console.log("estas en la red equivocada");
+        this.$store.commit("myStore/setBtnConectarBilletera", 4);
+        this.contratoVentaCargado = false;
+        Loading.hide();
+      } else {
+        var accounts = await window.ethereum.request({
+          method: "eth_accounts",
+        });
+        this.handleAccountsChanged(accounts);
+      }
+    },
+    metamaskMensaje(msj){
+      console.log("metamask mensaje", msj)
+    },
+    async verificarConexion() {
+      if (window.ethereum) {
+        var accounts = await window.ethereum.request({
+          method: "eth_accounts",
+        });
+        this.$store.commit("myStore/setCurrentAccount", accounts[0])
+        var chainId = await window.ethereum.request({ method: "eth_chainId" });
+        this.chainChanged(chainId);
+        this.handleAccountsChanged(accounts);
 
-    
+        window.ethereum.on("accountsChanged", this.handleAccountsChanged);
+        window.ethereum.on("chainChanged", this.chainChanged);
+        window.ethereum.on("transactionHash", this.transactionHash);
+          window.ethereum.on("message", this.metamaskMensaje);
+        console.log("si esta conectado  a metamask");
+      } else if (web3) {
+        web3 = new Web3(window.web3.currentProvider);
+        console.log("web3", web3);
+        this.$store.commit("myStore/setBtnConectarBilletera", 1);
+      } else {
+        this.$store.commit("myStore/setBtnConectarBilletera", 0);
+        console.log(
+          "No ethereum browser is installed. Try it installing MetaMask "
+        );
+      }
     },
   },
   async mounted() {
-    if (window.ethereum) {
-      var accounts = await window.ethereum.request({ method: 'eth_accounts' })
-      console.log("accounts", accounts)
-      if(accounts.length == 0){
-          this.btnConectarBilletera = 1
-      }else{
-          this.btnConectarBilletera = 2
-      }
-      window.ethereum.on('accountsChanged', this.handleAccountsChanged);
-      console.log("si esta conectado  a metamask");
-      
-    } else if (web3) {
-      web3 = new Web3(window.web3.currentProvider);
-      console.log("web3", web3);
-      this.btnConectarBilletera = 1
-    } else {
-      this.btnConectarBilletera = 0
-      console.log(
-        "No ethereum browser is installed. Try it installing MetaMask "
-      );
-    }
-
-      Loading.hide();
+    const web3 = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545/')
+    web3.eth.getTransactionReceipt('0xe0151d8d65207d1f7289582084d761406b6178e28083ffc5821e4903e0b6504b', function(err, tx){
+    console.log(tx)
+});
+    await this.verificarConexion();
   },
 });
 </script>

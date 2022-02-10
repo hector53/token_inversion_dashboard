@@ -42,6 +42,55 @@ export function validate ({ state }) {
 //guardar wallet o comprobar si ya existe 
 
 
+
+
+
+
+
+export function updateTransaccionHash ({ commit, state }, payload) {
+  return new Promise(async (resolve, reject) => {
+      try {
+      
+       const token = Cookies.get('authToken')
+       var param = {
+        hash: payload.hash, 
+         email: token.user_email
+       }
+       console.log("parametros", param)
+        const { data } = await api.post('send/update_hash', param)
+       console.log("la data fue", data)
+        return data
+      }catch(e){
+      
+        reject(e)
+      }
+    })
+}
+
+export function enviarTransaccionPendiente ({ commit, state }, payload) {
+  return new Promise(async (resolve, reject) => {
+      try {
+      
+       const token = Cookies.get('authToken')
+       var param = {
+        hash: payload.hash, 
+        type: payload.type,
+        value: payload.value,
+         email: token.user_email
+       }
+       console.log("parametros", param)
+        const { data } = await api.post('send/transaccion_pendiente', param)
+       console.log("la data fue", data)
+        return data
+      }catch(e){
+      
+        reject(e)
+      }
+    })
+}
+
+
+
 export function save_wallet_user ({ commit, state }, payload) {
   return new Promise(async (resolve, reject) => {
       try {
@@ -62,6 +111,24 @@ export function save_wallet_user ({ commit, state }, payload) {
     })
 }
 
+
+
+
+
+
+export function getTransaccionesPendientes ({ commit, state }) {
+  return new Promise(async (resolve, reject) => {
+      try {
+        const token = Cookies.get('authToken')
+        const { data } = await api.get('get/transacciones_pendientes?email='+token.user_email)
+        resolve(data)
+      }catch(e){
+        reject(e)
+      }
+    })
+}
+
+
 //get wallets of user
 export function get_wallets_user ({ commit, state }) {
   return new Promise(async (resolve, reject) => {
@@ -74,3 +141,4 @@ export function get_wallets_user ({ commit, state }) {
       }
     })
 }
+
