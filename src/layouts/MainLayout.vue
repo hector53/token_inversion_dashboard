@@ -70,7 +70,7 @@
     <q-drawer
       v-model="leftDrawerOpen"
       show-if-above
-      width="250"
+      :width="250"
     >
       <q-list>
         
@@ -83,7 +83,7 @@
           </q-item-section>
         </q-item>
 
-         <q-item to="/Deposits" class="qitemSidebar" :class="{'active': $route.path == '/Deposits'}">
+         <q-item to="/deposits" class="qitemSidebar" :class="{'active': $route.path == '/deposits'}">
           <q-item-section avatar>
             <q-icon name="account_balance_wallet"/>
           </q-item-section>

@@ -181,6 +181,14 @@ export default {
   methods: {
       async aprobarFintUsd(){
 
+   Loading.show({
+        message: ` <p style="font-size: 16px; font-weight: bold;">Necesitamos que apruebe los siguientes permisos para usar su Token FintUsd</p> 
+        <p>esperando aprobación</p>
+        `,
+        html: true,
+        boxClass: "bg-white text-grey-9",
+        spinnerColor: "info",
+      });
           
       try {
         var approve = await ContratoVenta.tokenFintUsd.approve(
@@ -206,6 +214,15 @@ export default {
 
       },
     async aprobarUsdt() {
+      
+         Loading.show({
+        message: ` <p style="font-size: 16px; font-weight: bold;">Necesitamos que apruebe los siguientes permisos para usar su Token USDT</p> 
+        <p>esperando aprobación</p>
+        `,
+        html: true,
+        boxClass: "bg-white text-grey-9",
+        spinnerColor: "info",
+      });
       try {
         var approve = await ContratoVenta.tokenUsdt.approve(
           ContratoVenta.tokenFintUsdSale.address,
@@ -215,6 +232,9 @@ export default {
             value: 0,
           }
         );
+
+        
+
       } catch (e) {
         console.log("error al aprobar USDT", e.message);
         this.$q.notify({
@@ -252,7 +272,16 @@ export default {
       if (balanceAllow < this.moneySend) {
         console.log("pido aprobar ");
         await this.aprobarUsdt();
+           Loading.show({
+        message: ` <p style="font-size: 16px; font-weight: bold;">Intercambiando ${this.moneySend} USDT por  ${this.moneySend} FintUsd</p> 
+        <p>confirme esta transacción en su wallet</p>
+        `,
+        html: true,
+        boxClass: "bg-white text-grey-9",
+        spinnerColor: "info",
+      });
       }
+      
       ContratoVenta.tokenFintUsdSale
         .buy(parseInt(this.moneySend), {
           from: this.$store.state.myStore.currentAccount,
@@ -350,6 +379,14 @@ export default {
       if (balanceAllow < this.moneySend) {
         console.log("pido aprobar ");
         await this.aprobarFintUsd();
+          Loading.show({
+        message: ` <p style="font-size: 16px; font-weight: bold;">Intercambiando ${this.moneySend} FintUsd por  ${this.moneySend} USDT</p> 
+        <p>confirme esta transacción en su wallet</p>
+        `,
+        html: true,
+        boxClass: "bg-white text-grey-9",
+        spinnerColor: "info",
+      });
       }
       ContratoVenta.tokenFintUsdSale
         .sell(parseInt(this.moneySend), {

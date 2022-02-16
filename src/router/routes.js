@@ -11,7 +11,7 @@ const routes = [
       },
       {path: '/Swap', component: () => import('pages/Swap.vue')},
       {path: '/graficos', component: () => import('pages/graficos.vue')},
-      {path: '/approve', component: () => import('pages/approve.vue')}
+      {path: '/deposits', component: () => import('pages/deposits.vue')}
       
 
       // Not completed yet
@@ -20,7 +20,7 @@ const routes = [
   },
 
   // Always leave this as last one,
-  // but you can also remove it
+  // but you can also remove it 
   
   {
     path: '/login',

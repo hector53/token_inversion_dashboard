@@ -129,6 +129,21 @@ export function getTransaccionesPendientes ({ commit, state }) {
 }
 
 
+export function get_transacciones ({ commit, state }) {
+  return new Promise(async (resolve, reject) => {
+      try {
+        const token = Cookies.get('authToken')
+        const { data } = await api.get('get/transacciones_realizadas?email='+token.user_email)
+        resolve(data)
+      }catch(e){
+        reject(e)
+      }
+    })
+}
+
+
+
+
 //get wallets of user
 export function get_wallets_user ({ commit, state }) {
   return new Promise(async (resolve, reject) => {

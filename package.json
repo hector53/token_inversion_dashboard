@@ -1,8 +1,8 @@
 {
-  "name": "test",
+  "name": "fintelligentia",
   "version": "0.0.1",
-  "description": "A Quasar Framework app",
-  "productName": "Quasar App",
+  "description": "Fintelligentia",
+  "productName": "Fintelligentia App",
   "author": "",
   "private": true,
   "scripts": {
