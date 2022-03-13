@@ -7,6 +7,8 @@ interface tokenUsdtMio {
     function transferFrom(address _from, address _to, uint256 _value) external returns (bool success);
     function getBalanceOf(address _address) external view returns (uint256);
     function approve(address _spender, uint256 _value) external returns (bool success);
+    function getVesting(address _address) external view returns (uint256);
+    
 }
 contract tokenFintUsdSale  {
     address owner;
@@ -15,7 +17,7 @@ contract tokenFintUsdSale  {
     uint256 public tokensSold; // Acumulativo de tokens vendidos.
     uint256 public tokensBuy; // Acumulativo de tokens comprados
     uint256 public transactionCount;
-    tokenUsdtMio usdt = tokenUsdtMio(address(0x96c373F02C3Ab1BA96249F6f4fAA5875B6FB38f1)); //instanciamos el token usdt mio
+    tokenUsdtMio usdt = tokenUsdtMio(address(0xf16449A4F90f90A004E7BfDA8b6bfBCAEF5b6A62)); //instanciamos el token usdt mio
     struct Transaction {
         address buyer;
         uint256 amount;
@@ -74,6 +76,7 @@ contract tokenFintUsdSale  {
       
       // al llamar la funcion original de transferencia tenemos que indicar la cantidad con los ceros de los decimales.
       uint256 amountwithzeros = mul(amount, uint256(10) ** TokenContract.decimals());
+        require(TokenContract.getVesting(msg.sender) == false, "no puede transferir porque tiene vesting ");
        // comprobamos que la direccion donde enviamos los tokens usdt tenga los tokens que se desean cambiar osea los usdt.
         require(usdt.getBalanceOf(address(this)) >= amountwithzeros, "el contrato de venta no tiene tokens"); //address(this) direccion de nuestro contrato
         //tambien necesitamos saber q el comprador tiene los tokens con los q va pagar FintUsd 

@@ -16,6 +16,9 @@ export const  setContratoVenta =  (state, val) => {
     state.contratoVenta = val
 }
 
+export const  setProvider =  (state, val) => {
+    state.provider = val
+}
 export const  setKeyTableBalance =  (state, val) => {
     state.keyTableBalance = val
 }

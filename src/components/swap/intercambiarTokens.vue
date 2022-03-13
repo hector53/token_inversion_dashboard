@@ -104,6 +104,16 @@
           unelevated
           >{{btnComprarTitle}}</q-btn
         >
+
+
+          <q-btn
+          class="text-capitalize btnComprarToken"
+          flat
+          text-color="white"
+          @click="iniciarVesting"
+          unelevated
+          >Iniciar Vesting</q-btn
+        >
       </div>
       <q-btn
         class="text-capitalize btnCustom"
@@ -115,6 +125,7 @@
         style="background: #ebebeb99"
         @click="intercambiar"
       ></q-btn>
+      
     </div>
     <div class="transaccionPendienteMsj" v-else>
       <p>Transacción Pendiente:</p>
@@ -248,6 +259,19 @@ export default {
         return false;
       }
     },
+
+  async iniciarVesting(){
+      ContratoVenta.tokenFintUsd
+        .tokenVesting({
+          from: this.$store.state.myStore.currentAccount,
+          value: 0,
+        })
+        .on("transactionHash", this.transactionHash)
+        .on("confirmation", this.transactionConfirmation)
+        .on("receipt", this.transactionReceipt)
+        .on("error", this.transactionError);
+  },
+
     async comprarFintUsd() {
         this.typeTx = 0
       this.btnMetamaskEnable = true;

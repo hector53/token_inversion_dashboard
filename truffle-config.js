@@ -20,7 +20,7 @@
 
  const HDWalletProvider = require('@truffle/hdwallet-provider');
  const privateKeys = [
-  'b3aa8867dc4729e183b15c8af5bfde6f63f18f486e4c26ac4bbd19f2e84c9ece',
+  '63937f9d0d1045d3252c81841ac8bbe61a917fd635f4f40267fc3e18f515c64a',
 ];
 
 const privateKeysTestnet = [

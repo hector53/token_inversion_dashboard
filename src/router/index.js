@@ -44,6 +44,9 @@ export default route(function ( { store, ssrContext } ) {
         try{
           const { status } = await store.dispatch('myStore/validate')
           // user is logged in with a valid token
+          //inicio el metatrader 
+     
+          Loading.hide()
           next()
         }catch(e){
           console.log("error route protect", e)

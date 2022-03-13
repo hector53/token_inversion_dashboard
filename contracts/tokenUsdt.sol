@@ -36,7 +36,7 @@ contract tokenUsdt_hector_test1 {
     function transfer(address _to, uint256 _value) public returns (bool success){
         //recibe la direccion a donde se envia , y el valor de tokens a enviar
         //retorna un success en caso de ser exitosa
-          require(balanceOf[msg.sender] >= _value);//se lee alreves por lo q entiendo osea
+          require(balanceOf[msg.sender] >= _value, "no hay suficientes tokens usdt");//se lee alreves por lo q entiendo osea
           //si el balance es mayor entonces pasa pa la siguiente linea de lo contrario too low
           //msg.sender = direccion de quien esta enviando el saldo 
           balanceOf[msg.sender] -= _value; //descontamos el monto a transferir de la cuenta q esta transfiriendo 

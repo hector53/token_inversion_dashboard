@@ -16,7 +16,6 @@
         <q-space/>
         <div class="q-gutter-sm row items-center no-wrap">
         
-        
              <div class="btnConectarBilletera" v-if="$store.state.myStore.btnConectarBilletera == 1" @click="conectarBilletera">
               <span>Connect Wallet</span>
             </div>
@@ -136,17 +135,24 @@
 <script>
 import EssentialLink from 'components/EssentialLink.vue'
 import Messages from "./Messages";
-import { Cookies } from 'quasar'
+import { Cookies, Loading } from 'quasar'
 import { defineComponent, ref } from 'vue'
 import ContratoVenta from "../contratos/contratoVenta.js";
-
+import Web3 from "web3/dist/web3.min.js";
 export default defineComponent({
   name: 'MainLayout',
 
   components: {
     EssentialLink
   },
-
+data() {
+  return {
+       btnConectarBilletera: 0,
+      currentAccount: "",
+      contratoVentaCargado: false,
+      chainId: 0,
+  }
+},
   setup () {
     const leftDrawerOpen = ref(false)
 
@@ -159,10 +165,15 @@ export default defineComponent({
   }, 
 
   methods: {
+
+
     async loadContract() {
         try {
            await ContratoVenta.init()
            console.log("contrato venta desde store", ContratoVenta)
+          this.$store.commit("myStore/setContratoVenta", true);
+                
+           this.contratoVentaCargado = true;
         }catch(e){
           console.log("error", e)
           this.$q.notify({
@@ -172,20 +183,127 @@ export default defineComponent({
           timeout: 2000
           })
         }
+        console.log("contaro venta desde store ahora si", this.$store.state.myStore.contratoVenta)
+    },
+        async guardarBilletera(address) {
+      try {
+        const result = await this.$store.dispatch(
+          "myStore/save_wallet_user",
+          address
+        );
+      } catch (e) {
+        console.log("Error:");
+        console.log(e);
+      }
     },
    conectarBilletera() {
       this.loadContract()
+      
     },
    
     logOut(){
       Cookies.remove("authToken");
       this.$router.push("/login")
     }, 
+ handleAccountsChanged(accounts) {
+      if (this.chainId == 1337) {
+        console.log("entrando al metodo", accounts);
+        if (accounts.length == 0) {
+          // MetaMask is locked or the user has not connected any accounts
+          console.log("Please connect to MetaMask.");
+          this.$store.commit("myStore/setBtnConectarBilletera", 1);
+          Loading.hide()
+        } else if (accounts[0] !== this.$store.state.myStore.currentAccount) {
+           this.$store.commit("myStore/setProvider", window.web3.currentProvider);
+          this.$store.commit("myStore/setCurrentAccount", accounts[0]);
+          console.log("current account ", accounts[0]);
+          this.$store.commit("myStore/setBtnConectarBilletera", 2);
+          this.$store.commit(
+            "myStore/setKeyTableBalance",
+            this.$store.state.myStore.keyTableBalance + 1
+          );
+          this.loadContract();
+          this.guardarBilletera(accounts[0]);
+          // Do any other work!
+        }else{
+           this.$store.commit("myStore/setCurrentAccount", accounts[0]);
+            this.$store.commit("myStore/setProvider", window.web3.currentProvider);
+          console.log("current account ", accounts[0]);
+          this.$store.commit("myStore/setBtnConectarBilletera", 2);
+          this.$store.commit(
+            "myStore/setKeyTableBalance",
+            this.$store.state.myStore.keyTableBalance + 1
+          );
+          this.loadContract();
+        }
+      }
+    },
 
-
+ async chainChanged(chainId) {
+      chainId = parseInt(chainId, 16);
+      this.chainId = chainId;
+      console.log("chainId", chainId);
+      if (chainId != 1337) {
+        console.log("estas en la red equivocada");
+        this.$store.commit("myStore/setBtnConectarBilletera", 4);
+        this.contratoVentaCargado = false;
+        Loading.hide();
+      } else {
+        var accounts = await window.ethereum.request({
+          method: "eth_accounts",
+        });
+        this.handleAccountsChanged(accounts);
+      }
+    },
+transactionHash(hash){
+console.log("transaccion hash desde el dashboard", hash)
+},
+metamaskMensaje(msj){
+      console.log("metamask mensaje", msj)
+    },
   },
-  mounted() {
-     
+ async  mounted() {
+
+      if (window.ethereum) {
+        console.log("si hay metamask")
+        var accounts = await window.ethereum.request({
+          method: "eth_accounts",
+        });
+        if(accounts.length > 0){
+          console.log("si hay cuentas")
+          this.$store.commit("myStore/setCurrentAccount", accounts[0])
+          var chainId = await window.ethereum.request({ method: "eth_chainId" });
+          this.chainChanged(chainId);
+          this.handleAccountsChanged(accounts);
+
+          window.ethereum.on("accountsChanged", this.handleAccountsChanged);
+          window.ethereum.on("chainChanged", this.chainChanged);
+          window.ethereum.on("transactionHash", this.transactionHash);
+          window.ethereum.on("message", this.metamaskMensaje);
+          this.$store.commit("myStore/setProvider", window.web3.currentProvider);
+        }else{
+          console.log("no hay cuentas")
+           console.log("Please connect to MetaMask.");
+          this.$store.commit("myStore/setBtnConectarBilletera", 1);
+          window.ethereum.on("accountsChanged", this.handleAccountsChanged);
+          window.ethereum.on("chainChanged", this.chainChanged);
+          window.ethereum.on("transactionHash", this.transactionHash);
+          window.ethereum.on("message", this.metamaskMensaje);
+        }
+        
+         Loading.hide()
+      }else if (web3) {
+        web3 = new Web3(window.web3.currentProvider);
+        console.log("web3", web3);
+        this.$store.commit("myStore/setBtnConectarBilletera", 1);
+         Loading.hide()
+      } else {
+        this.$store.commit("myStore/setBtnConectarBilletera", 0);
+        console.log(
+          "No ethereum browser is installed. Try it installing MetaMask "
+        );
+         Loading.hide()
+      }
   },
 })
 </script>

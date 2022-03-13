@@ -91,7 +91,7 @@
             <tableAssetsCoin
               v-if="
                 $store.state.myStore.btnConectarBilletera == 2 &&
-                contratoVentaCargado
+                $store.state.myStore.contratoVenta
               "
               :key="$store.state.myStore.keyTableBalance"
             />
@@ -106,7 +106,7 @@
        
             
           </q-card-section>
-            <intercambiar-tokens v-if="contratoVentaCargado" ></intercambiar-tokens>
+            <intercambiar-tokens v-if="$store.state.myStore.contratoVenta" ></intercambiar-tokens>
         </q-card>
       </div>
     </div>
@@ -160,7 +160,7 @@ export default defineComponent({
   },
   methods: {
     handleAccountsChanged(accounts) {
-      if (this.chainId == 97) {
+      if (this.chainId == 1337) {
         console.log("entrando al metodo", accounts);
         if (accounts.length == 0) {
           // MetaMask is locked or the user has not connected any accounts
@@ -228,7 +228,7 @@ console.log("transaccion hash desde el dashboard", hash)
       chainId = parseInt(chainId, 16);
       this.chainId = chainId;
       console.log("chainId", chainId);
-      if (chainId != 97) {
+      if (chainId != 1337) {
         console.log("estas en la red equivocada");
         this.$store.commit("myStore/setBtnConectarBilletera", 4);
         this.contratoVentaCargado = false;
@@ -270,12 +270,13 @@ console.log("transaccion hash desde el dashboard", hash)
       }
     },
   },
-  async mounted() {
-    const web3 = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545/')
-    web3.eth.getTransactionReceipt('0xe0151d8d65207d1f7289582084d761406b6178e28083ffc5821e4903e0b6504b', function(err, tx){
-    console.log(tx)
-});
-    await this.verificarConexion();
+   mounted() {
+        console.log(this)
+   // const web3 = new Web3('https://data-seed-prebsc-1-s1.binance.org:8545/')
+  //  web3.eth.getTransactionReceipt('0xe0151d8d65207d1f7289582084d761406b6178e28083ffc5821e4903e0b6504b', function(err, tx){
+  //  console.log(tx)
+    //});
+   // await this.verificarConexion();
   },
 });
 </script>

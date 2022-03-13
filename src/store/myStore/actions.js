@@ -1,5 +1,7 @@
 import { api } from 'boot/axios'
 import { Cookies } from 'quasar'
+
+
 export function login ({ commit, state }, payload) {
     return new Promise(async (resolve, reject) => {
         try {
@@ -25,6 +27,13 @@ export function register ({ commit, state }, payload) {
       }
     })
 }
+
+
+
+
+
+
+
 
 export function validate ({ state }) {
   const token = Cookies.get('authToken')
