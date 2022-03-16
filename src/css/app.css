@@ -545,9 +545,9 @@ opacity: 0!important;
 }
 .btnComprarToken{
     background-color: #0d0c54;
-    font-size: 20px;
-    padding-left: 25px;
-    padding-right: 25px;
+    font-size: 16px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 .btnComprarToken span{
     text-transform: uppercase;
@@ -558,4 +558,8 @@ opacity: 0!important;
     line-height: 2;
     margin-top: 20px;
     font-weight: bold;
+}
+.thSize{
+    font-size: 16px!important;
+    font-weight: bold!important;
 }

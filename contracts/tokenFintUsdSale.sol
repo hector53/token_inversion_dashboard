@@ -17,7 +17,7 @@ contract tokenFintUsdSale  {
     uint256 public tokensSold; // Acumulativo de tokens vendidos.
     uint256 public tokensBuy; // Acumulativo de tokens comprados
     uint256 public transactionCount;
-    tokenUsdtMio usdt = tokenUsdtMio(address(0xf16449A4F90f90A004E7BfDA8b6bfBCAEF5b6A62)); //instanciamos el token usdt mio
+    tokenUsdtMio usdt = tokenUsdtMio(address(0x49e4B3a08Ef9E996381E676e0AA034e5570dEAA5)); //instanciamos el token usdt mio
     struct Transaction {
         address buyer;
         uint256 amount;

@@ -7,6 +7,7 @@
     hide-bottom
   >
   </q-table>
+
   <q-spinner
     style="width: 100%; text-align: center"
     color="primary"

@@ -29,7 +29,41 @@ export default route(function ( { store, ssrContext } ) {
   Router.beforeEach(async (to, from, next) => {
     
     const token = Cookies.get('authToken')
-    if (to.matched.some(record => record.meta.requiresAuth)) {
+
+    if (to.matched.some(record => record.meta.isAdmin)) {
+      if (!token) {
+        next({
+          path: '/login',
+          query: { redirect: to.fullPath }
+        })
+      }else{
+        Loading.show();
+        console.log("consulto si es admin")
+        try{
+          const { status } = await store.dispatch('myStore/adminDashboard')
+          console.log("status admin", status)
+          if(status){
+            next()
+          }else{
+            Loading.hide()
+            store.commit('myStore/DELETE_USER')
+            next({
+              path: '/login',
+            })
+          }
+          
+        }catch(e){
+          Loading.hide()
+          console.log("error route protect", e)
+          store.commit('myStore/DELETE_USER')
+          next({
+            path: '/login',
+          })
+        }
+
+      }
+
+    }else if (to.matched.some(record => record.meta.requiresAuth)) {
       
       if (!token) {
         next({
@@ -46,7 +80,7 @@ export default route(function ( { store, ssrContext } ) {
           // user is logged in with a valid token
           //inicio el metatrader 
      
-          Loading.hide()
+         // Loading.hide()
           next()
         }catch(e){
           console.log("error route protect", e)

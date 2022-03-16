@@ -166,3 +166,69 @@ export function get_wallets_user ({ commit, state }) {
     })
 }
 
+export function iniciarVesting ({ commit, state }, payload) {
+  return new Promise(async (resolve, reject) => {
+      try {
+       const token = Cookies.get('authToken')
+       var param = {
+        addr: payload.addr, 
+        email: token.user_email
+       }
+       console.log("parametros", param)
+        const { data } = await api.post('save/address_vesting', param)
+       console.log("la data fue", data)
+        return data
+      }catch(e){
+      
+        reject(e)
+      }
+    })
+}
+
+export function deleteVesting ({ commit, state }, payload) {
+  return new Promise(async (resolve, reject) => {
+      try {
+       const token = Cookies.get('authToken')
+       var param = {
+        addr: payload.addr, 
+        email: token.user_email
+       }
+       console.log("parametros", param)
+        const { data } = await api.post('delete/address_vesting', param)
+       console.log("la data fue", data)
+        return data
+      }catch(e){
+      
+        reject(e)
+      }
+    })
+}
+
+export function adminDashboard ({ commit, state }, payload) {
+  return new Promise(async (resolve, reject) => {
+      try {
+       const token = Cookies.get('authToken')
+       var param = {
+        email: token.user_email
+       }
+       console.log("parametros", param)
+        const { data } = await api.post('get/admin_user', param)
+       console.log("la data fue", data)
+       resolve(data)
+      }catch(e){
+      
+        reject(e)
+      }
+    })
+}
+
+export function getAddressInVesting ({ commit, state }, payload) {
+  return new Promise(async (resolve, reject) => {
+      try {
+        const { data } = await api.get('get/get_address_in_vesting')
+       resolve(data)
+      }catch(e){
+        reject(e)
+      }
+    })
+}

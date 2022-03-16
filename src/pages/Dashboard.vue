@@ -86,6 +86,10 @@
           <q-card-section class="row" style="align-items: center">
             <div class="text-h6 text-weight-bolder text-grey-8">Balance</div>
             <q-space></q-space>
+           <vestingButtons :key="$store.state.myStore.keyTableBalance+1" v-if="
+                $store.state.myStore.btnConectarBilletera == 2 &&
+                $store.state.myStore.contratoVenta
+              " />
           </q-card-section>
           <q-list>
             <tableAssetsCoin
@@ -127,6 +131,9 @@ export default defineComponent({
   components: {
     lineChartsbalance: defineAsyncComponent(() =>
       import("components/charts/lineChartsbalance")
+    ),
+    vestingButtons: defineAsyncComponent(() =>
+      import("components/vesting/vestingButtons")
     ),
     barChartDeposit: defineAsyncComponent(() =>
       import("components/charts/barChartDeposit")
@@ -277,6 +284,7 @@ console.log("transaccion hash desde el dashboard", hash)
   //  console.log(tx)
     //});
    // await this.verificarConexion();
+    Loading.hide()
   },
 });
 </script>

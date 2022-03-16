@@ -106,14 +106,7 @@
         >
 
 
-          <q-btn
-          class="text-capitalize btnComprarToken"
-          flat
-          text-color="white"
-          @click="iniciarVesting"
-          unelevated
-          >Iniciar Vesting</q-btn
-        >
+        
       </div>
       <q-btn
         class="text-capitalize btnCustom"
@@ -181,7 +174,9 @@ export default {
       confirmationTransaction: 0,
       intervalPending: 0,
       typeTx: 0, 
-      btnComprarTitle: 'comprar fintusd'
+      btnComprarTitle: 'comprar fintusd', 
+      btnVesting: false, 
+      btnVestingText: ''
     };
   },
   watch: {
@@ -260,17 +255,6 @@ export default {
       }
     },
 
-  async iniciarVesting(){
-      ContratoVenta.tokenFintUsd
-        .tokenVesting({
-          from: this.$store.state.myStore.currentAccount,
-          value: 0,
-        })
-        .on("transactionHash", this.transactionHash)
-        .on("confirmation", this.transactionConfirmation)
-        .on("receipt", this.transactionReceipt)
-        .on("error", this.transactionError);
-  },
 
     async comprarFintUsd() {
         this.typeTx = 0
@@ -329,8 +313,12 @@ export default {
         timeout: 2000,
       });
     },
+
+  
+    
     transactionReceipt(receipt) {
       console.log("receipt", receipt);
+     
       if(receipt.status == true){
             this.updateTransaccionHash(this.hashPending);
             this.moneySend = 0
@@ -533,6 +521,8 @@ export default {
       }
     },
     async get_transacciones_pendientes() {
+   
+
       try {
         const result = await this.$store.dispatch(
           "myStore/getTransaccionesPendientes"

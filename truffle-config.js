@@ -24,7 +24,7 @@
 ];
 
 const privateKeysTestnet = [
-  '70a093e4c2e80a707030995d6437a110dfbe581b0765f78478547ea06af2ece5',
+  '7e13add687f9d280fbf3c94e965ff7031d1861d117645fc0156e66162451a269',
 ];
 //
 // const fs = require('fs');
@@ -50,7 +50,7 @@ module.exports = {
     //
     development: {
       host: "127.0.0.1",     // Localhost (default: none)
-      port: 8545,            // Standard Ethereum port (default: none)
+      port: 7545,            // Standard Ethereum port (default: none)
       network_id: "*",       // Any network (default: none)
      },
     // Another network with more advanced options...
@@ -76,9 +76,9 @@ module.exports = {
 
      testnet: {
       provider: () => new HDWalletProvider(privateKeysTestnet, `https://data-seed-prebsc-1-s1.binance.org:8545`),
-      networkCheckTimeout: 10000, 
+      networkCheckTimeout: 1000000, 
       network_id: 97,
-      confirmations: 20,
+      confirmations: 2,
       timeoutBlocks: 200,
       skipDryRun: true
     },

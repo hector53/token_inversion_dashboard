@@ -15,7 +15,10 @@ const routes = [
       {path: '/getholders', component: () => import('pages/approve.vue')},
       {
         path: '/admin',
-        component: () => import('pages/admin/index.vue')
+        component: () => import('pages/admin/index.vue'), 
+        meta: {
+          isAdmin: true  
+        }
       },
 
       // Not completed yet

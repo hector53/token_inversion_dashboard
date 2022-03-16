@@ -151,6 +151,7 @@ data() {
       currentAccount: "",
       contratoVentaCargado: false,
       chainId: 0,
+      chainWork: 97
   }
 },
   setup () {
@@ -206,7 +207,7 @@ data() {
       this.$router.push("/login")
     }, 
  handleAccountsChanged(accounts) {
-      if (this.chainId == 1337) {
+      if (this.chainId == this.chainWork) {
         console.log("entrando al metodo", accounts);
         if (accounts.length == 0) {
           // MetaMask is locked or the user has not connected any accounts
@@ -243,7 +244,7 @@ data() {
       chainId = parseInt(chainId, 16);
       this.chainId = chainId;
       console.log("chainId", chainId);
-      if (chainId != 1337) {
+      if (chainId != this.chainWork) {
         console.log("estas en la red equivocada");
         this.$store.commit("myStore/setBtnConectarBilletera", 4);
         this.contratoVentaCargado = false;
